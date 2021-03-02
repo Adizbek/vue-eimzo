@@ -1,28 +1,64 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    App
+
+    <div>
+      {{ certs }}
+    </div>
+
+    <div :key="index" v-for="(cert,index) in certs">
+      {{ cert.CN }}
+
+      <button @click="load(cert)">load</button>
+    </div>
+
+    <button @click="showVersion">Check version</button>
+
+    <button @click="$eimzoSign('Sign it')">Sign with E-IMZO</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+
+  data () {
+    return {
+      certs: []
+    }
+  },
+
+  mounted () {
+    this.handleImzo()
+  },
+
+  methods: {
+    showVersion () {
+      this.$eimzo.checkVersion().then(version => {
+        console.log(version)
+      })
+    },
+
+    async load (key) {
+      // let loadKeyResult = await this.$eimzo.loadKey(key)
+      // let cert = await this.$eimzo.getMainCertificate(loadKeyResult.id)
+      // let certInfo = await this.$eimzo.getCertInfo(cert)
+
+      let result = await this.$eimzo.signPkcs7(key, 'Hello world')
+      let token = await this.$eimzo.getTimestampToken(result.signature_hex)
+
+      console.log(token)
+    },
+
+    async handleImzo () {
+      await this.$eimzo.install()
+
+      this.certs = await this.$eimzo.listAllUserKeys()
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
