@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import EIMZOVuePlugin from '@/eimzo-plugin'
+import EIMZOVuePlugin from './vue-eimzo'
 
 Vue.config.productionTip = false
 
