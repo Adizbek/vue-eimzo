@@ -1,13 +1,16 @@
 {
-  "name": "eimzo-vuejs",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vue-eimzo",
+  "version": "0.1.2",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --name vue-eimzo --entry ./src/eimzo-plugin.js --target lib",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
+  "main": "dist/vue-eimzo.umd.min.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"

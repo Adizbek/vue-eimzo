@@ -8,9 +8,6 @@ const EIMZOVuePlugin = {}
  * @param Vue
  */
 EIMZOVuePlugin.install = function (Vue) {
-  Vue.prototype.$eimzoSign = function (payload) {
-    console.log(payload)
-  }
   Vue.prototype.$eimzo = new EIMZO()
 }
 
