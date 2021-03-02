@@ -1,5 +1,13 @@
 # vue-eimzo
 
+## Installation
+https://www.npmjs.com/package/vue-eimzo
+```sh
+npm i vue-eimzo
+# or
+yarn add vue-eimzo
+```
+
 ## Installing as a plugin
 ```js
 import EIMZOVuePlugin from 'vue-eimzo'

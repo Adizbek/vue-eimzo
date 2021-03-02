@@ -7,6 +7,12 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
+  "author": {
+    "name": "Adizbek Ergashev",
+    "url": "https://github.com/Adizbek",
+    "email": "adizbek1998@gmail.com"
+  },
+  "homepage": "https://github.com/Adizbek/vue-eimzo",
   "main": "dist/vue-eimzo.umd.min.js",
   "files": [
     "dist"
