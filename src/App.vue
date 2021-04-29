@@ -9,12 +9,12 @@
     <div :key="index" v-for="(cert,index) in certs">
       {{ cert.CN }}
 
-      <button @click="load(cert)">load</button>
+      <button @click="signWithKey(cert)">load</button>
     </div>
 
     <button @click="showVersion">Check version</button>
 
-    <button @click="$eimzoSign('Sign it')">Sign with E-IMZO</button>
+    <button>Sign with E-IMZO</button>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ export default {
       })
     },
 
-    async load (key) {
+    async signWithKey (key) {
       // let loadKeyResult = await this.$eimzo.loadKey(key)
       // let cert = await this.$eimzo.getMainCertificate(loadKeyResult.id)
       // let certInfo = await this.$eimzo.getCertInfo(cert)
@@ -48,7 +48,7 @@ export default {
       let result = await this.$eimzo.signPkcs7(key, 'Hello world')
       let token = await this.$eimzo.getTimestampToken(result.signature_hex)
 
-      console.log(token)
+      console.log(result, token)
     },
 
     async handleImzo () {
