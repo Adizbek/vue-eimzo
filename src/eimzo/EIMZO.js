@@ -207,7 +207,9 @@ export default class EIMZO {
    * @param {string} key
    */
   addApiKey (domain, key) {
-    this.apiKeys.push(domain, key)
+    if (!this.apiKeys.includes(domain)) {
+      this.apiKeys.push(domain, key)
+    }
   }
 
   async install () {

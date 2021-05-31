@@ -4,11 +4,12 @@ import EIMZO from '@/eimzo/EIMZO'
 
 const EIMZOVuePlugin = {}
 
+export const VueEIMZO = new EIMZO();
 /**
  * @param Vue
  */
 EIMZOVuePlugin.install = function (Vue) {
-  Vue.prototype.$eimzo = new EIMZO()
+  Vue.prototype.$eimzo = VueEIMZO
 }
 
 export default EIMZOVuePlugin

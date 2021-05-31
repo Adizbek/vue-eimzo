@@ -1,9 +1,9 @@
 {
   "name": "vue-eimzo",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --name vue-eimzo --entry ./src/eimzo-plugin.js --target lib",
+    "build": "vue-cli-service build --name vue-eimzo --entry ./src/vue-eimzo.js --target lib",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
