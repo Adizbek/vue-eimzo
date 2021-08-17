@@ -353,7 +353,7 @@
     // if ES5 is available, make Base64.extendString() available
     if (typeof Object.defineProperty === 'function') {
         var noEnum = function (v) {
-            return { value: v, enumerable: false, writable: true, configurable: true }
+            return {value: v, enumerable: false, writable: true, configurable: true}
         }
         global.Base64.extendString = function () {
             Object.defineProperty(

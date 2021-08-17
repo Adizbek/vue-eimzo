@@ -9,7 +9,7 @@ export const VueEIMZO = new EIMZO();
  * @param Vue
  */
 EIMZOVuePlugin.install = function (Vue) {
-  Vue.prototype.$eimzo = VueEIMZO
+    Vue.prototype.$eimzo = VueEIMZO
 }
 
 export default EIMZOVuePlugin
