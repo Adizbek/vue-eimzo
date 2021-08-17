@@ -1,6 +1,6 @@
 {
   "name": "vue-eimzo",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --name vue-eimzo --entry ./src/vue-eimzo.js --target lib",
