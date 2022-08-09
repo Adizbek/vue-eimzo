@@ -295,7 +295,20 @@ export const EIMZOClient = {
                 var pkcs7 = data.pkcs7_64;
                 if (timestamper) {
                     var sn = data.signer_serial_number;
-                    timestamper(data.signature_hex, function (tst) {
+
+                    if (typeof timestamper.then === 'function') {
+                        // async function
+                        timestamper.then((tst) => {
+                            complete(tst)
+                        }).catch((err) => fail(err, null))
+                    } else {
+                        // normal function
+                        timestamper(data.signature_hex, function (tst) {
+                            complete(tst)
+                        }, fail);
+                    }
+
+                    function complete(tst) {
                         CAPIWS.callFunction({
                             plugin: "pkcs7",
                             name: "attach_timestamp_token_pkcs7",
@@ -310,7 +323,7 @@ export const EIMZOClient = {
                         }, function (e) {
                             fail(e, null);
                         });
-                    }, fail);
+                    }
                 } else {
                     success(pkcs7);
                 }
