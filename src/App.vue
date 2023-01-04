@@ -15,6 +15,11 @@
         <button @click="showVersion">Check version</button>
 
         <button>Sign with E-IMZO</button>
+
+        <div v-if="isIDCard">
+            ID CARD
+            <button @click="signWithKey('idcard')">load id card</button>
+        </div>
     </div>
 </template>
 
@@ -25,7 +30,8 @@ export default {
 
     data() {
         return {
-            certs: []
+            certs: [],
+            isIDCard: false,
         }
     },
 
@@ -40,6 +46,7 @@ export default {
             })
         },
 
+        // eslint-disable-next-line no-unused-vars
         async signWithKey(key) {
             // let loadKeyResult = await this.$eimzo.loadKey(key)
             // let cert = await this.$eimzo.getMainCertificate(loadKeyResult.id)
@@ -55,6 +62,7 @@ export default {
             await this.$eimzo.install()
 
             this.certs = await this.$eimzo.listAllUserKeys()
+            this.isIDCard = await this.$eimzo.isIDCardPlugged();
         }
     }
 }

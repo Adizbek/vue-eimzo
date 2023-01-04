@@ -67,6 +67,12 @@ export default class EIMZO {
         })
     }
 
+    async isIDCardPlugged() {
+        return new Promise((resolve, reject) => {
+            client.idCardIsPLuggedIn(resolve, reject)
+        })
+    }
+
     async installApiKeys() {
         return new Promise((resolve, reject) => {
             client.installApiKeys(resolve, reject)
@@ -160,17 +166,18 @@ export default class EIMZO {
     }
 
     /**
-     * @param {Cert} cert
+     * @param {Cert|'idcard'} cert
      * @param {string} content
      * @return {Promise<SignPkcs7Result>}
      */
     async signPkcs7(cert, content) {
-        let loadKeyResult = await this.loadKey(cert)
+        let loadKeyResult = cert === 'idcard' ? undefined : await this.loadKey(cert)
+        const keyId = cert === 'idcard' ? 'idcard' : loadKeyResult?.id
 
         return new Promise((resolve, reject) => {
             CAPIWS.callFunction({
                 name: 'create_pkcs7', plugin: 'pkcs7', arguments: [
-                    window.Base64.encode(content), loadKeyResult.id, 'no'
+                    window.Base64.encode(content), keyId, 'no'
                 ]
             }, (event, data) => {
                 if (data.success) {
