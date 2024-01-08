@@ -10,49 +10,54 @@ yarn add vue-eimzo
 
 ## Installing as a plugin
 ```js
-import EIMZOVuePlugin from 'vue-eimzo'
+import eimzo from 'vue-eimzo'
 
-Vue.use(EIMZOVuePlugin) 
+const app = createApp(App)
 
-// you can access EIMZO client as $eimzo inside vue instance
+app.use(eimzo)
+
+app.mount('#app')
 ```
 
 ## Methods
+
+### Setup EIMZO client
 ```js
-await this.$eimzo.install()
+const eimzo = useEIMZO();
 
-this.certs = await this.$eimzo.listAllUserKeys()
+await eimzo.install()
 
-let loadKeyResult = await this.$eimzo.loadKey(key)
-let cert = await this.$eimzo.getMainCertificate(loadKeyResult.id)
-let certInfo = await this.$eimzo.getCertInfo(cert)
-
-let result = await this.$eimzo.signPkcs7(key, 'Hello world')
-let token = await this.$eimzo.getTimestampToken(result.signature_hex)
-
+// Get all user certs (.pfx)
+const certs = await eimzo.listAllUserKeys()
 ```
 
-## Project setup
-```
-yarn install
+### Sign text
+```js
+const eimzo = useEIMZO();
+
+eimzo.addApiKey('domain.uz', 'api-key')
+await eimzo.install()
+
+this.certs = await eimzo.listAllUserKeys()
+const cert = certs[0] // or any other cert
+
+const result = await eimzo.signPkcs7(cert, 'Hello world')
+
+// optional, if you want to get timestamp token
+const token = await eimzo.getTimestampToken(result.signature_hex)
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+### Get cert info
+```js
+const eimzo = useEIMZO();
 
-### Run your unit tests
-```
-yarn test:unit
-```
+await eimzo.install()
 
-### Lints and fixes files
-```
-yarn lint
+const certs = await eimzo.listAllUserKeys()
+const cert = certs[0] // or any other cert
+
+const loadKeyResult = await eimzo.loadKey(cert)
+const mainCert = await eimzo.getMainCertificate(loadKeyResult.id)
+const certInfo = await eimzo.getCertInfo(mainCert)
 ```
