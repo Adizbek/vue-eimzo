@@ -362,7 +362,7 @@ export const EIMZOClient = {
                         }, function (e) {
                             fail(e, null);
                         });
-                    }, fail);
+                    }, fail, data.pkcs7_64);
                 } else {
                     success(pkcs7);
                 }
