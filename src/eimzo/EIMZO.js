@@ -195,12 +195,12 @@ export default class EIMZO {
      * @param {?Function} timestamper - function to get timestamp data from server
      * @return {Promise<SignPkcs7Result>}
      */
-    async createPkcs7(id, content, timestamper) {
+    async createPkcs7(id, content, timestamper, enableAttachTimestamp) {
         return new Promise((resolve, reject) => {
             client.createPkcs7(id, content, timestamper,
                 (/* string */ pkcs7) => {
                     resolve(pkcs7)
-                }, reject);
+                }, reject, false, false, enableAttachTimestamp);
         })
     }
 

@@ -326,7 +326,7 @@ export const EIMZOClient = {
             }
         }
     },
-    createPkcs7: function (id, data, timestamper, success, fail, detached, isDataBase64Encoded) {
+    createPkcs7: function (id, data, timestamper, success, fail, detached, isDataBase64Encoded, enableAttachTimestamp = true) {
         var data64;
         if (isDataBase64Encoded === true) {
             data64 = data
@@ -348,20 +348,24 @@ export const EIMZOClient = {
                 if (timestamper) {
                     var sn = data.signer_serial_number;
                     timestamper(data.signature_hex, function (tst) {
-                        CAPIWS.callFunction({
-                            plugin: "pkcs7",
-                            name: "attach_timestamp_token_pkcs7",
-                            arguments: [pkcs7, sn, tst]
-                        }, function (event, data) {
-                            if (data.success) {
-                                var pkcs7tst = data.pkcs7_64;
-                                success(pkcs7tst);
-                            } else {
-                                fail(null, data.reason);
-                            }
-                        }, function (e) {
-                            fail(e, null);
-                        });
+                        if(enableAttachTimestamp) {
+                            CAPIWS.callFunction({
+                                plugin: "pkcs7",
+                                name: "attach_timestamp_token_pkcs7",
+                                arguments: [pkcs7, sn, tst]
+                            }, function (event, data) {
+                                if (data.success) {
+                                    var pkcs7tst = data.pkcs7_64;
+                                    success(pkcs7tst);
+                                } else {
+                                    fail(null, data.reason);
+                                }
+                            }, function (e) {
+                                fail(e, null);
+                            });
+                        } else {
+                            success(tst);
+                        }
                     }, fail, data.pkcs7_64);
                 } else {
                     success(pkcs7);
